@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -13,25 +12,24 @@ namespace WebAPI_Learning_1.Controllers
 {
     public class UsersController : ApiController
     {
-        private WebAPI_Learning_1Context db = new WebAPI_Learning_1Context();
-        private UserRepository _repo;
+        private readonly UserRepository _userRepo;
 
-        public UsersController()
+        public UsersController(UserRepository userRepo)
         {
-            _repo = new UserRepository(db);
+            _userRepo = userRepo;
         }
 
         // GET: api/Users
         public IQueryable<User> GetUsers()
         {
-            return _repo.GetAll();
+            return _userRepo.GetAll();
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(long id)
         {
-            var user = await _repo.GetByIdAsync(id);
+            var user = await _userRepo.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -50,7 +48,7 @@ namespace WebAPI_Learning_1.Controllers
             }
 
             user.ModifiedAt = DateTime.UtcNow;
-            await _repo.InsertAsync(user);
+            await _userRepo.InsertAsync(user);
             
             return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
         }
@@ -74,11 +72,12 @@ namespace WebAPI_Learning_1.Controllers
 
             try
             {
-                await _repo.UpdateAsync(user);
+                await _userRepo.UpdateAsync(user);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                var userExists = await UserExists(id);
+                if (!userExists)
                 {
                     return NotFound();
                 }
@@ -92,28 +91,20 @@ namespace WebAPI_Learning_1.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> DeleteUser(long id)
         {
-            User user = await _repo.GetByIdAsync(id);
+            User user = await _userRepo.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            await _repo.DeleteAsync(user);
+            await _userRepo.DeleteAsync(user);
             return Ok(user);
         }
-
-        protected override void Dispose(bool disposing)
+        
+        private async Task<bool> UserExists(long id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool UserExists(long id)
-        {
-            return db.Users.Count(e => e.Id == id) > 0;
+            var user = await _userRepo.GetByIdAsync(id);
+            return user != null;
         }
     }
 }
