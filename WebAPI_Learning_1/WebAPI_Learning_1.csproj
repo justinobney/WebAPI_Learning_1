@@ -202,7 +202,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\BaseRepository.cs" />
-    <Compile Include="Data\UserRepository.cs" />
+    <Compile Include="Data\Users\User.cs" />
+    <Compile Include="Data\Users\UserConfiguration.cs" />
+    <Compile Include="Data\Users\UserRepository.cs" />
     <Compile Include="Data\WebAPI_Learning_1Context.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -224,8 +226,11 @@
     <Compile Include="Migrations\201601301643584_User_FixDates.Designer.cs">
       <DependentUpon>201601301643584_User_FixDates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601302344542_User_AddEntityTypeConfig.cs" />
+    <Compile Include="Migrations\201601302344542_User_AddEntityTypeConfig.Designer.cs">
+      <DependentUpon>201601302344542_User_AddEntityTypeConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +253,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601301643584_User_FixDates.resx">
       <DependentUpon>201601301643584_User_FixDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601302344542_User_AddEntityTypeConfig.resx">
+      <DependentUpon>201601302344542_User_AddEntityTypeConfig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 using System;
 using WebAPI_Learning_1.Interfaces;
 
-namespace WebAPI_Learning_1.Models
+namespace WebAPI_Learning_1.Data.Users
 {
     public class User :IEntity, IHasTouchedProperties
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI_Learning_1.Data;
-using WebAPI_Learning_1.Models;
+using WebAPI_Learning_1.Data.Users;
 
 namespace WebAPI_Learning_1.Controllers
 {

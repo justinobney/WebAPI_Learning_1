@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using WebAPI_Learning_1.Data.Users;
 
 namespace WebAPI_Learning_1.Data
 {
@@ -8,12 +9,17 @@ namespace WebAPI_Learning_1.Data
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.AddFromAssembly(typeof(WebAPI_Learning_1Context).Assembly);
+        }
+
         //This is here only for unit testing purposes
         public virtual void SetModified(object entity)
         {
             Entry(entity).State = EntityState.Modified;
         }
 
-        public DbSet<Models.User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-using WebAPI_Learning_1.Models;
-
-namespace WebAPI_Learning_1.Data
+namespace WebAPI_Learning_1.Data.Users
 {
     public class UserRepository : BaseRepository<User>
     {
