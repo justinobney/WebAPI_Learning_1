@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201601302344542_User_AddEntityTypeConfig.Designer.cs">
       <DependentUpon>201601302344542_User_AddEntityTypeConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601310556100_User_FixCreatedAt.cs" />
+    <Compile Include="Migrations\201601310556100_User_FixCreatedAt.Designer.cs">
+      <DependentUpon>201601310556100_User_FixCreatedAt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -256,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601302344542_User_AddEntityTypeConfig.resx">
       <DependentUpon>201601302344542_User_AddEntityTypeConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601310556100_User_FixCreatedAt.resx">
+      <DependentUpon>201601310556100_User_FixCreatedAt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
