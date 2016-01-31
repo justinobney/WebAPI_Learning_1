@@ -1,89 +1,67 @@
-﻿using System;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using WebAPI_Learning_1.Data;
+using MediatR;
 using WebAPI_Learning_1.Data.Users;
+using WebAPI_Learning_1.Requests.Commands;
+using WebAPI_Learning_1.Requests.Queries;
 
 namespace WebAPI_Learning_1.Controllers
 {
     public class UsersController : ApiController
     {
-        private readonly UserRepository _userRepo;
+        private readonly Mediator _mediator;
 
-        public UsersController(UserRepository userRepo)
+        public UsersController(Mediator mediator)
         {
-            _userRepo = userRepo;
+            _mediator = mediator;
         }
 
         // GET: api/Users
-        public IQueryable<User> GetUsers()
+        public IHttpActionResult GetUsers()
         {
-            return _userRepo.GetAll();
+            var users = _mediator.Send(new GetUsersQuery());
+            return Ok(users);
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(long id)
         {
-            var user = await _userRepo.GetByIdAsync(id);
+            var user = await _mediator.SendAsync(new GetUserQuery { Id = id });
             if (user == null)
             {
                 return NotFound();
             }
-
+            
             return Ok(user);
         }
 
         // POST: api/Users
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> PostUser(User user)
+        public async Task<IHttpActionResult> PostUser(CreateUserCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            user.ModifiedAt = DateTime.UtcNow;
-            await _userRepo.InsertAsync(user);
-            
+            var user = await _mediator.SendAsync(command);
             return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
         }
 
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUser(long id, User user)
+        public async Task<IHttpActionResult> PutUser(long id, UpdateUserCommand command)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            if (id != user.Id)
+            if (id != command.Id)
             {
                 return BadRequest();
             }
 
-            user.ModifiedAt = DateTime.UtcNow;
-
-            try
-            {
-                await _userRepo.UpdateAsync(user);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                var userExists = await UserExists(id);
-                if (!userExists)
-                {
-                    return NotFound();
-                }
-                throw;
-            }
-
+            await _mediator.SendAsync(command);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -91,20 +69,10 @@ namespace WebAPI_Learning_1.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> DeleteUser(long id)
         {
-            User user = await _userRepo.GetByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            await _userRepo.DeleteAsync(user);
+            var user = await _mediator.SendAsync(new DeleteUserCommand {Id = id});
             return Ok(user);
         }
         
-        private async Task<bool> UserExists(long id)
-        {
-            var user = await _userRepo.GetByIdAsync(id);
-            return user != null;
-        }
     }
+    
 }
