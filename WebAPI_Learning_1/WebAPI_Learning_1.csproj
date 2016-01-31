@@ -244,6 +244,7 @@
     <Compile Include="Requests\Commands\CreateUserCommand.cs" />
     <Compile Include="Requests\Commands\DeleteUserCommand.cs" />
     <Compile Include="Requests\Commands\UpdateUserCommand.cs" />
+    <Compile Include="Requests\Queries\GetByIdQuery.cs" />
     <Compile Include="Requests\Queries\GetUserQuery.cs" />
     <Compile Include="Requests\Queries\GetUsersQuery.cs" />
   </ItemGroup>

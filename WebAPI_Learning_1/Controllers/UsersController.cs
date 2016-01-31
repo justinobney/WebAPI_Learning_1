@@ -29,7 +29,8 @@ namespace WebAPI_Learning_1.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(long id)
         {
-            var user = await _mediator.SendAsync(new GetUserQuery { Id = id });
+            //var user = await _mediator.SendAsync(new GetByIdQuery<User> {Id = id});
+            var user = await _mediator.SendAsync(new GetUserQuery {Id = id});
             if (user == null)
             {
                 return NotFound();
@@ -74,5 +75,4 @@ namespace WebAPI_Learning_1.Controllers
         }
         
     }
-    
 }
