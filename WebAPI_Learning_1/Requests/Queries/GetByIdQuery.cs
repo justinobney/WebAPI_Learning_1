@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using MediatR;
 using WebAPI_Learning_1.Data;
 using WebAPI_Learning_1.Interfaces;
+using WebAPI_Learning_1.Requests.Decorators;
 
 namespace WebAPI_Learning_1.Requests.Queries
 {
@@ -10,6 +11,7 @@ namespace WebAPI_Learning_1.Requests.Queries
         public long Id { get; set; }
     }
 
+    [DoNotValidate]
     public class GetByIdQueryHandler<T> : IAsyncRequestHandler<GetByIdQuery<T>, T> where T : class, IEntity
     {
         private readonly BaseRepository<T> _repo;

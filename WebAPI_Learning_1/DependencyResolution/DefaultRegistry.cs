@@ -23,6 +23,7 @@ using MediatR;
 using StructureMap;
 using StructureMap.Graph;
 using StructureMap.Pipeline;
+using WebAPI_Learning_1.Data;
 using WebAPI_Learning_1.Interfaces;
 using WebAPI_Learning_1.Requests.Decorators;
 
@@ -49,6 +50,7 @@ namespace WebAPI_Learning_1.DependencyResolution
 
                     scan.AddAllTypesOf(typeof (IAuthorizer<>));
                     scan.AddAllTypesOf(typeof (AbstractValidator<>));
+                    scan.AddAllTypesOf(typeof (BaseRepository<>));
 
                     var handlerType = For(typeof (IRequestHandler<,>));
                     handlerType.DecorateAllWith(typeof (ValidateHandler<,>), DoesNotHaveAttribute(typeof (DoNotValidate)));

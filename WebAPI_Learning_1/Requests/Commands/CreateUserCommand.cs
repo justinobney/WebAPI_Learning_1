@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using WebAPI_Learning_1.Data.Users;
 
@@ -31,6 +32,15 @@ namespace WebAPI_Learning_1.Requests.Commands
             await _userRepo.InsertAsync(user);
 
             return user;
+        }
+    }
+
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    {
+        public CreateUserCommandValidator()
+        {
+            RuleFor(x => x.Email).NotEmpty();
+            RuleFor(x => x.Username).NotEmpty();
         }
     }
 
