@@ -15,34 +15,72 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Reflection;
 using AutoMapper;
 using MediatR;
+using StructureMap;
+using StructureMap.Graph;
+using StructureMap.Pipeline;
+using WebAPI_Learning_1.Interfaces;
+using WebAPI_Learning_1.Requests.Decorators;
 
-namespace WebAPI_Learning_1.DependencyResolution {
-    using StructureMap.Configuration.DSL;
-    using StructureMap.Graph;
-	
-    public class DefaultRegistry : Registry {
+namespace WebAPI_Learning_1.DependencyResolution
+{
+    public class DefaultRegistry : Registry
+    {
         #region Constructors and Destructors
 
-        public DefaultRegistry() {
+        public DefaultRegistry()
+        {
             Scan(
-                scan => {
+                scan =>
+                {
                     scan.TheCallingAssembly();
+                    scan.AssemblyContainingType(typeof (LoggingHandler<,>));
                     scan.WithDefaultConventions();
 
-                    scan.AddAllTypesOf(typeof(IRequestHandler<,>));
-                    scan.AddAllTypesOf(typeof(IAsyncRequestHandler<,>));
-                    scan.AddAllTypesOf(typeof(INotificationHandler<>));
-                    scan.AddAllTypesOf(typeof(IAsyncNotificationHandler<>));
+
+                    scan.AddAllTypesOf(typeof (IRequestHandler<,>));
+                    scan.AddAllTypesOf(typeof (IAsyncRequestHandler<,>));
+                    scan.AddAllTypesOf(typeof (INotificationHandler<>));
+                    scan.AddAllTypesOf(typeof (IAsyncNotificationHandler<>));
+
+                    scan.AddAllTypesOf(typeof (IAuthorizer<>));
+
+                    var handlerType = For(typeof (IRequestHandler<,>));
+                    handlerType.DecorateAllWith(typeof (LoggingHandler<,>), DoesNotHaveAttribute(typeof (DoNotLog)));
+                    handlerType.DecorateAllWith(typeof (AuthorizeHandler<,>), HasAttribute(typeof (Authorize)));
+
+                    var asyncHandlerType = For(typeof (IAsyncRequestHandler<,>));
+                    asyncHandlerType.DecorateAllWith(typeof (LoggingHandlerAsync<,>),
+                        DoesNotHaveAttribute(typeof (DoNotLog)));
+                    asyncHandlerType.DecorateAllWith(typeof (AuthorizeHandlerAsync<,>), HasAttribute(typeof (Authorize)));
+
                 });
-            
+
             For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => t => ctx.GetInstance(t));
             For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => t => ctx.GetAllInstances(t));
             For<IMediator>().Use<Mediator>();
-            
+
             MappingConfig.Register();
             For<IMapper>().Use(_ => MappingConfig.Instance);
+        }
+
+        private static Func<Instance, bool> DoesNotHaveAttribute(Type attr)
+        {
+            return instance => !ContainsAttribute(attr, instance);
+        }
+
+        private static Func<Instance, bool> HasAttribute(Type attr)
+        {
+            return instance => ContainsAttribute(attr, instance);
+        }
+
+        private static bool ContainsAttribute(Type attr, Instance instance)
+        {
+            var type = instance.ReturnedType ?? instance.GetType();
+            return type.GetCustomAttribute(attr, false) != null;
         }
 
         #endregion
