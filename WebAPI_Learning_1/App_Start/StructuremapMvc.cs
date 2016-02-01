@@ -49,6 +49,7 @@ namespace WebAPI_Learning_1.App_Start {
         public static void Start() {
             IContainer container = IoC.Initialize();
             File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "container.txt"), container.WhatDoIHave());
+            container.AssertConfigurationIsValid();
 
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);

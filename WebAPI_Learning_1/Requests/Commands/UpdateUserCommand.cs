@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using WebAPI_Learning_1.Data.Users;
+using WebAPI_Learning_1.Requests.Decorators;
 
 namespace WebAPI_Learning_1.Requests.Commands
 {
@@ -13,6 +14,7 @@ namespace WebAPI_Learning_1.Requests.Commands
         public string Email { get; set; }
     }
 
+    [DoNotValidate]
     public class UpdateUserCommandHandler : AsyncRequestHandler<UpdateUserCommand>
     {
         private readonly IMapper _mapper;
@@ -26,7 +28,8 @@ namespace WebAPI_Learning_1.Requests.Commands
 
         protected override async Task HandleCore(UpdateUserCommand message)
         {
-            var user = _mapper.Map<User>(message);
+            var user = await _userRepo.GetByIdAsync(message.Id);
+            _mapper.Map(message, user);
             user.ModifiedAt = DateTime.UtcNow;
             await _userRepo.UpdateAsync(user);
         }

@@ -11,6 +11,8 @@ namespace WebAPI_Learning_1
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CreateUserCommand, User>();
+                cfg.CreateMap<UpdateUserCommand, User>()
+                .ForMember(dest => dest.CreatedAt, opts => opts.Ignore());
             });
 
             Instance = config.CreateMapper();
