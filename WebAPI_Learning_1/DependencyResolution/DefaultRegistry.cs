@@ -18,6 +18,7 @@
 using System;
 using System.Reflection;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using StructureMap;
 using StructureMap.Graph;
@@ -47,15 +48,17 @@ namespace WebAPI_Learning_1.DependencyResolution
                     scan.AddAllTypesOf(typeof (IAsyncNotificationHandler<>));
 
                     scan.AddAllTypesOf(typeof (IAuthorizer<>));
+                    scan.AddAllTypesOf(typeof (AbstractValidator<>));
 
                     var handlerType = For(typeof (IRequestHandler<,>));
-                    handlerType.DecorateAllWith(typeof (LoggingHandler<,>), DoesNotHaveAttribute(typeof (DoNotLog)));
+                    handlerType.DecorateAllWith(typeof (ValidateHandler<,>), DoesNotHaveAttribute(typeof (DoNotValidate)));
                     handlerType.DecorateAllWith(typeof (AuthorizeHandler<,>), HasAttribute(typeof (Authorize)));
+                    handlerType.DecorateAllWith(typeof (LoggingHandler<,>), DoesNotHaveAttribute(typeof (DoNotLog)));
 
                     var asyncHandlerType = For(typeof (IAsyncRequestHandler<,>));
-                    asyncHandlerType.DecorateAllWith(typeof (LoggingHandlerAsync<,>),
-                        DoesNotHaveAttribute(typeof (DoNotLog)));
+                    asyncHandlerType.DecorateAllWith(typeof(ValidateHandlerAsync<,>), DoesNotHaveAttribute(typeof(DoNotValidate)));
                     asyncHandlerType.DecorateAllWith(typeof (AuthorizeHandlerAsync<,>), HasAttribute(typeof (Authorize)));
+                    asyncHandlerType.DecorateAllWith(typeof (LoggingHandlerAsync<,>), DoesNotHaveAttribute(typeof (DoNotLog)));
 
                 });
 

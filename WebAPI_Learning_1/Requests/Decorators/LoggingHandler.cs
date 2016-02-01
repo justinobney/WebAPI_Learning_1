@@ -39,10 +39,10 @@ namespace WebAPI_Learning_1.Requests.Decorators
             _inner = inner;
         }
 
-        public Task<TResponse> Handle(TRequest message)
+        public async Task<TResponse> Handle(TRequest message)
         {
             Debug.WriteLine("Request: {0}", message);
-            var response = _inner.Handle(message);
+            var response = await _inner.Handle(message);
             Debug.WriteLine("Response: {0}", response);
 
             return response;

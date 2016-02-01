@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using WebAPI_Learning_1.Data.Users;
 using WebAPI_Learning_1.Interfaces;
@@ -32,8 +33,15 @@ namespace WebAPI_Learning_1.Requests.Queries
     {
         public bool Authorize(GetUserQuery message)
         {
-            var rand = new Random();
-            return rand.Next(1, 9)%3 == 0;
+            return true;
+        }
+    }
+
+    public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
+    {
+        public GetUserQueryValidator()
+        {
+            RuleFor(request => request.Id).GreaterThan(0);
         }
     }
 }

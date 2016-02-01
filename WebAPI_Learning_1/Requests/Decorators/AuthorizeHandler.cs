@@ -52,11 +52,11 @@ namespace WebAPI_Learning_1.Requests.Decorators
             _authorizer = authorizer;
         }
 
-        public Task<TResponse> Handle(TRequest message)
+        public async Task<TResponse> Handle(TRequest message)
         {
             if (_authorizer.Authorize(message))
             {
-                return _inner.Handle(message);
+                return await _inner.Handle(message);
             }
 
             throw new AuthorizationException();
