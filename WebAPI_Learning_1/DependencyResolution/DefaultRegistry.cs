@@ -31,15 +31,16 @@ namespace WebAPI_Learning_1.DependencyResolution {
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
 
-                    scan.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
-                    scan.ConnectImplementationsToTypesClosing(typeof(IAsyncRequestHandler<,>));
-
+                    scan.AddAllTypesOf(typeof(IRequestHandler<,>));
+                    scan.AddAllTypesOf(typeof(IAsyncRequestHandler<,>));
+                    scan.AddAllTypesOf(typeof(INotificationHandler<>));
+                    scan.AddAllTypesOf(typeof(IAsyncNotificationHandler<>));
                 });
-
+            
             For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => t => ctx.GetInstance(t));
             For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => t => ctx.GetAllInstances(t));
             For<IMediator>().Use<Mediator>();
-
+            
             MappingConfig.Register();
             For<IMapper>().Use(_ => MappingConfig.Instance);
         }

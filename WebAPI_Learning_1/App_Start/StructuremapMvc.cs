@@ -15,6 +15,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.IO;
 using WebAPI_Learning_1.App_Start;
 
 using WebActivatorEx;
@@ -46,6 +48,8 @@ namespace WebAPI_Learning_1.App_Start {
 		
         public static void Start() {
             IContainer container = IoC.Initialize();
+            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "container.txt"), container.WhatDoIHave());
+
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
