@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using WebAPI_Learning_1.Filters;
 
 namespace WebAPI_Learning_1
 {
@@ -16,6 +17,8 @@ namespace WebAPI_Learning_1
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new ValidationExceptionFilter());
         }
     }
 }

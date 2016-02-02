@@ -222,6 +222,7 @@
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
+    <Compile Include="Filters\ValidationExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,6 +257,7 @@
     <Compile Include="Requests\Queries\GetByIdQuery.cs" />
     <Compile Include="Requests\Queries\GetUserQuery.cs" />
     <Compile Include="Requests\Queries\GetUsersQuery.cs" />
+    <Compile Include="Responses\ApiError.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
