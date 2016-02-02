@@ -5,7 +5,7 @@ using FluentValidation;
 using MediatR;
 using WebAPI_Learning_1.Data.Users;
 
-namespace WebAPI_Learning_1.Requests.Commands
+namespace WebAPI_Learning_1.Requests.Users
 {
     public class CreateUserCommand : IAsyncRequest<User>
     {

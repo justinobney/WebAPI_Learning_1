@@ -4,7 +4,7 @@ using MediatR;
 using WebAPI_Learning_1.Data.Users;
 using WebAPI_Learning_1.Requests.Decorators;
 
-namespace WebAPI_Learning_1.Requests.Commands
+namespace WebAPI_Learning_1.Requests.Users
 {
     public class DeleteUserCommand : IAsyncRequest<User>
     {

@@ -3,7 +3,7 @@ using MediatR;
 using WebAPI_Learning_1.Data.Users;
 using WebAPI_Learning_1.Requests.Decorators;
 
-namespace WebAPI_Learning_1.Requests.Queries
+namespace WebAPI_Learning_1.Requests.Users
 {
     public class GetUsersQuery : IRequest<IQueryable<User>>
     {

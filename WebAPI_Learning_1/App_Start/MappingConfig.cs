@@ -1,6 +1,6 @@
 using AutoMapper;
 using WebAPI_Learning_1.Data.Users;
-using WebAPI_Learning_1.Requests.Commands;
+using WebAPI_Learning_1.Requests.Users;
 
 namespace WebAPI_Learning_1
 {

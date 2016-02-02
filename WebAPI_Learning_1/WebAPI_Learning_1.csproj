@@ -255,7 +255,6 @@
     <Compile Include="Requests\Decorators\AuthorizeHandler.cs" />
     <Compile Include="Requests\Decorators\LoggingHandler.cs" />
     <Compile Include="Requests\Decorators\ValidateHandler.cs" />
-    <Compile Include="Requests\Queries\GetByIdQuery.cs" />
     <Compile Include="Requests\Queries\GetUserQuery.cs" />
     <Compile Include="Requests\Queries\GetUsersQuery.cs" />
     <Compile Include="Responses\ApiError.cs" />
