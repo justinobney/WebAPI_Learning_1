@@ -249,14 +249,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\Commands\CreateUserCommand.cs" />
-    <Compile Include="Requests\Commands\DeleteUserCommand.cs" />
-    <Compile Include="Requests\Commands\UpdateUserCommand.cs" />
     <Compile Include="Requests\Decorators\AuthorizeHandler.cs" />
     <Compile Include="Requests\Decorators\LoggingHandler.cs" />
     <Compile Include="Requests\Decorators\ValidateHandler.cs" />
-    <Compile Include="Requests\Queries\GetUserQuery.cs" />
-    <Compile Include="Requests\Queries\GetUsersQuery.cs" />
+    <Compile Include="Requests\Users\CreateUserCommand.cs" />
+    <Compile Include="Requests\Users\DeleteUserCommand.cs" />
+    <Compile Include="Requests\Users\GetUserQuery.cs" />
+    <Compile Include="Requests\Users\GetUsersQuery.cs" />
+    <Compile Include="Requests\Users\UpdateUserCommand.cs" />
     <Compile Include="Responses\ApiError.cs" />
   </ItemGroup>
   <ItemGroup>
