@@ -19,6 +19,7 @@ namespace WebAPI_Learning_1
             );
 
             config.Filters.Add(new ValidationExceptionFilter());
+            config.Filters.Add(new AuthorizationExceptionFilter());
         }
     }
 }

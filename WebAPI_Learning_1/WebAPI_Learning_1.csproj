@@ -222,6 +222,7 @@
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
+    <Compile Include="Filters\AuthorizationExceptionFilter.cs" />
     <Compile Include="Filters\ValidationExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
