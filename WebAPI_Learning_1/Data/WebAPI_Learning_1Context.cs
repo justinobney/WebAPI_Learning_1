@@ -7,6 +7,7 @@ namespace WebAPI_Learning_1.Data
     {   
         public WebAPI_Learning_1Context() : base("name=WebAPI_Learning_1Context")
         {
+            Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
